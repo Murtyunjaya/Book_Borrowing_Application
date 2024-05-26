@@ -7,11 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 
-// Start the Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
 
 const startServer = async () => {
   try {
@@ -25,7 +21,7 @@ const startServer = async () => {
     app.use('/',require('./routes/route'))
 
     // Start the Server
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });

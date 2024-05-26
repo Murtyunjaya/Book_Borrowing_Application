@@ -22,3 +22,10 @@ Follow these steps to set up and run the project:
     cd myapp
     ```
 
+2. **install the dependency:**
+
+npm install
+
+3. **start the project:**
+
+nodemon appp.js

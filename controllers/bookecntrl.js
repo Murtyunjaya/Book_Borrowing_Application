@@ -1,11 +1,19 @@
+const mongoose = require('mongoose');
 const User = require('../models/user');
 const Book = require('../models/book');
 const Borrow = require('../models/borrow');
 
-
-
+const checkMongoDBConnection = async () => {
+  if (mongoose.connection.readyState !== 1) {
+    await mongoose.connect('mongodb://127.0.0.1:27017/bookBorrowingApp', {
+      
+    });
+    console.log('MongoDB connected successfully');
+  }
+};
 exports.allcategories = (async (req, res) => {
     try {
+      await checkMongoDBConnection()
       const categories = await Book.aggregate([
         {
           $group: {
@@ -17,14 +25,16 @@ exports.allcategories = (async (req, res) => {
           $sort: { count: -1 }
         }
       ]);
-      res.json(categories);
+      res.status(200).json({ data: categories });
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: err.message });
     }
   })
   
   exports.trendingbooks= (async (req, res) => {
     try {
+      await checkMongoDBConnection()
       const tenDaysAgo = new Date();
       tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
   
@@ -48,14 +58,17 @@ exports.allcategories = (async (req, res) => {
         },
         { $unwind: '$book' }
       ]);
-      res.json(trendingBooks);
+
+      res.status(200).json({ data: trendingBooks})
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: err.message });
     }
   })
   
   exports.delayedreturn = (async (req, res) => {
     try {
+      await checkMongoDBConnection()
       const delayedBooks = await Borrow.aggregate([
         { $match: { returnDate: { $exists: true, $ne: null } } },
         {
@@ -76,8 +89,9 @@ exports.allcategories = (async (req, res) => {
         },
         { $unwind: '$book' }
       ]);
-      res.json(delayedBooks);
+      res.status(200).json({data:delayedBooks});
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: err.message });
     }
   })
