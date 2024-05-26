@@ -19,7 +19,7 @@ Follow these steps to set up and run the project:
 1. **Clone the repository:**
     ```bash
     git clone https://github.com/Murtyunjaya/Book_Borrowing_Application.git
-    cd myapp
+    cd Book_Borrowing_Application
     ```
 
 2. **install the dependency:**
@@ -28,4 +28,4 @@ npm install
 
 3. **start the project:**
 
-nodemon appp.js
+nodemon app.js
